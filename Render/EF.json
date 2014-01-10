@@ -1,0 +1,106 @@
+﻿{
+    "@context": {
+        "nuget" : "http://nuget.org/vocab#",
+        "dc" : "http://purl.org/dc/elements/1.1/",
+        "dcte" : "http://purl.org/dc/terms/",
+        "abstract" : "dcte:abstract",
+        "available" : "dcte:available",
+        "contributor" : "dc:contributor",
+        "description" : "dc:description",
+        "identifier" : "dcte:identifier",
+        "identifier" : "dcte:identifier",
+        "language" : "dc:language",
+        "license" : "dcte:license",
+        "modified" : "dcte:modified",
+        "publisher" : "dc:publisher",
+        "subject" : "dc:subject",
+        "title" : "dc:title",
+        "type" : "dc:type",
+        "registration" : "nuget:registration",
+        "owner" : "nuget:owner",
+        "releaseNotes" : "nuget:releaseNotes",
+        "iconUrl" : "nuget:iconUrl",
+        "requireLicenseAcceptance" : "nuget:requireLicenseAcceptance",
+        "targetFrameworks" : "nuget:targetFrameworks",
+        "framework" : "nuget:framework",
+        "capabilities" : "nuget:capabilities",
+        "view" : "nuget:view",
+        "frameworkAssemblies" : "nuget:frameworkAssemblies",
+        "assemblyReferences" : "nuget:assemblyReferences"
+    },
+
+    "registration" : "EntityFramework",
+    "version" : "5.0.0",
+    "abstract" : "Entity Framework is Microsoft's recommended data access technology for new applications.",
+    "available" : "2012-08-11",
+    "contributor" : "Microsoft",
+    "description" : "Entity Framework is Microsoft's recommended data access technology for new applications.",
+    "identifier" : "EntityFramework/5.0.0",
+    "language" : "en-US",
+    "license" : "http://go.microsoft.com/fwlink/?LinkId=253898&clcid=0x409",
+    "modified" : "2013-12-12T1738",
+    "owner" : [
+        { 
+            "publisher" : "http://api.nuget.org/user/microsoft",
+            "title" : "Microsoft"
+        },
+        {
+            "publisher" : "http://api.nuget.org/user/EntityFramework",
+            "title" : "EntityFramework"
+        }
+    ],
+    "rights" : "2012 Microsoft Corporation",
+    "source" : "http://go.microsoft.com/fwlink/?LinkId=253891&clcid=0x409",
+    "subject" : [ "data", "entity", "framework", "orm", "database" ],
+    "title" : "EntityFramework",
+    "type" : "Software",
+    "releaseNotes" : "",
+    "iconUrl" : "",
+    "requireLicenseAcceptance" : true,
+    "versions" : [
+                "http://api.nuget.org/manifest/package/EntityFramework/5.0.0",
+                "http://api.nuget.org/manifest/package/EntityFramework/6.0.0"
+    ],
+    "nuspec" : "http://api.nuget.org/package/EntityFramework/5.0.0/EntityFramework.5.0.0.nuspec",
+    "tableOfContents" : "http://manifest.api.nuget.org/package/EntityFramework/5.0.0/tableofcontents.xml",
+    "targetFrameworks" : [
+        {
+            "framework" : "net40",
+            "capabilities" : [
+                {
+                    "title" : "install.ps1",
+                    "view" : "http://www.nuget.org/package/EntityFramework/5.0.0/install.ps1/view"
+                },
+                {
+                    "title" : "App.config.transform",
+                    "view" : "http://www.nuget.org/package/EntityFramework/5.0.0/App.config.transform/view"
+                },
+                {   
+                    "title" : "Web.config.transform",
+                    "view" : "http://www.nuget.org/package/EntityFramework/5.0.0/Web.config.transform/view"
+                }
+            ],
+            "frameworkAssemblies" : [ "System.Data.Entity", "System.ComponentModel.DataAnnotations" ],
+            "assemblyReferences" : [ "EntityFramework.dll" ]
+        },
+        {
+            "framework" : "net45",
+            "capabilities" : [
+                {
+                    "title" : "install.ps1",
+                    "view" : "http://www.nuget.org/package/EntityFramework/5.0.0/install.ps1/view"
+                },
+                {
+                    "title" : "App.config.transform",
+                    "view" : "http://www.nuget.org/package/EntityFramework/5.0.0/App.config.transform/view"
+                },
+                {   
+                    "title" : "Web.config.transform",
+                    "view" : "http://www.nuget.org/package/EntityFramework/5.0.0/Web.config.transform/view"
+                }
+            ],
+            "frameworkAssemblies" : [ "System.Data.Entity", "System.ComponentModel.DataAnnotations" ],
+            "assemblyReferences" : [ "EntityFramework.dll" ]
+        }
+    ]
+}
