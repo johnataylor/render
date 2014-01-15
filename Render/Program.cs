@@ -195,6 +195,9 @@ namespace Render
         static JObject MakePackageContent(JObject package, IDictionary<int, JObject> packages, JObject packageRegistration, IList<int> packageKeys, IDictionary<int, JObject> packageDependencies, IDictionary<int, JObject> packageFrameworks, IDictionary<int, IList<int>> dependenciesByPackage, IDictionary<int, IList<int>> frameworksByPackage, IDictionary<int, JObject> users, IDictionary<int, IList<int>> ownersByRegistration)
         {
             JObject content = new JObject();
+
+            content.Add("@context", MakePackageContextUri());
+
             content.Add("details", MakePackageDetailsContent(
                 package, 
                 packageDependencies, 
@@ -254,6 +257,16 @@ namespace Render
         }
 
         static string BaseUri = "http://linked.blob.core.windows.net/nuget/";
+
+        static string MakePackageContextUri()
+        {
+            return string.Format("{0}context/package.jsonld", BaseUri);
+        }
+
+        static string MakeOwnerContextUri()
+        {
+            return string.Format("{0}context/owner.jsonld", BaseUri);
+        }
 
         static string MakePackageName(JObject packageRegistration, JObject package)
         {
@@ -345,6 +358,8 @@ namespace Render
         {
             JObject owner = (JObject)user.DeepClone();
 
+            owner.Add("@context", MakeOwnerContextUri());
+
             JArray registrations = new JArray();
             foreach (int packageRegistrationKey in registrationsByOwner)
             {
@@ -367,8 +382,7 @@ namespace Render
             {
                 JObject user = users[owner.Key];
                 JObject content = MakeOwnerContent(user, packageRegistrations, owner.Value);
-                string name = string.Format("owner/{0}", user["Username"]);
-                SaveBlob(storageConnectionString, name, content);
+                SaveBlob(storageConnectionString, MakeOwnerName(user), content);
             }
         }
 
