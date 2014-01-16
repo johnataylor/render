@@ -473,6 +473,43 @@ namespace Render
             Console.WriteLine("Total: {0}", accumPackages);
         }
 
+        static void UploadStream(string storageConnectionString, Stream stream, string name, string contentType)
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+            CloudBlobClient client = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = client.GetContainerReference("nuget");
+            CloudBlockBlob blob = container.GetBlockBlobReference(name);
+
+            blob.Properties.ContentType = contentType;
+            blob.Properties.CacheControl = "no-cache";
+            blob.UploadFromStream(stream);
+        }
+
+        static string GetContentType(string name)
+        {
+            string extension = name.Substring(name.LastIndexOf('.') + 1);
+
+            switch (extension)
+            {
+                case "html": return "text/html";
+                case "js": return "application/json";
+                default: return "text/plain";
+            }
+        }
+
+        static void DeployScripts(string storageConnectionString, string path)
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(path);
+
+            foreach (FileInfo fileInfo in directoryInfo.EnumerateFiles())
+            {
+                using (Stream stream = fileInfo.Open(FileMode.Open))
+                {
+                    UploadStream(storageConnectionString, stream, fileInfo.Name, GetContentType(fileInfo.Name));
+                }
+            }
+        }
+
         static void Main(string[] args)
         {
             string connectionString = ConfigurationManager.AppSettings["sql"];
@@ -480,20 +517,27 @@ namespace Render
 
             try
             {
-                int? start = null;
-
-                if (args.Length == 1)
+                if (args.Length == 2 && args[0] == "-DeployScripts")
                 {
-                    int result;
-                    if (int.TryParse(args[0], out result))
-                    {
-                        start = result;
-                    }
+                    DeployScripts(storageConnectionString, args[1]);
                 }
+                else
+                {
+                    int? start = null;
 
-                Tuple<IDictionary<int, JObject>, IDictionary<int, IList<int>>, IDictionary<int, IList<int>>> owners = FetchAllOwners(connectionString);
-                ProcessPackages(start, connectionString, storageConnectionString, owners);
-                ProcessOwners(connectionString, storageConnectionString, owners);
+                    if (args.Length == 1)
+                    {
+                        int result;
+                        if (int.TryParse(args[0], out result))
+                        {
+                            start = result;
+                        }
+                    }
+
+                    Tuple<IDictionary<int, JObject>, IDictionary<int, IList<int>>, IDictionary<int, IList<int>>> owners = FetchAllOwners(connectionString);
+                    ProcessPackages(start, connectionString, storageConnectionString, owners);
+                    ProcessOwners(connectionString, storageConnectionString, owners);
+                }
             }
             catch (Exception e)
             {
