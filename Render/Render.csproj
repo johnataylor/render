@@ -79,7 +79,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\Index.html" />
+    <Content Include="Scripts\index.html" />
+    <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\Json2Html.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

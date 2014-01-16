@@ -503,6 +503,8 @@ namespace Render
 
             foreach (FileInfo fileInfo in directoryInfo.EnumerateFiles())
             {
+                Console.WriteLine("deploying {0}", fileInfo.Name);
+
                 using (Stream stream = fileInfo.Open(FileMode.Open))
                 {
                     UploadStream(storageConnectionString, stream, fileInfo.Name, GetContentType(fileInfo.Name));
