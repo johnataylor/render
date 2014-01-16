@@ -358,6 +358,8 @@ namespace Render
         {
             JObject owner = (JObject)user.DeepClone();
 
+            owner.Remove("Key");
+
             owner.Add("@context", MakeOwnerContextUri());
 
             JArray registrations = new JArray();
@@ -491,23 +493,22 @@ namespace Render
 
             switch (extension)
             {
-                case "html": return "text/html";
-                case "js": return "application/json";
-                default: return "text/plain";
+                case "html":    return "text/html";
+                case "js":      return "application/javascript";
+                case "jsonld":  return "application/json";
+                default:        return "text/plain";
             }
         }
 
-        static void DeployScripts(string storageConnectionString, string path)
+        static void Deploy(string storageConnectionString, string path, string destination)
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(path);
-
             foreach (FileInfo fileInfo in directoryInfo.EnumerateFiles())
             {
                 Console.WriteLine("deploying {0}", fileInfo.Name);
-
                 using (Stream stream = fileInfo.Open(FileMode.Open))
                 {
-                    UploadStream(storageConnectionString, stream, fileInfo.Name, GetContentType(fileInfo.Name));
+                    UploadStream(storageConnectionString, stream, destination.TrimEnd('/') + '/' + fileInfo.Name, GetContentType(fileInfo.Name));
                 }
             }
         }
@@ -521,7 +522,11 @@ namespace Render
             {
                 if (args.Length == 2 && args[0] == "-DeployScripts")
                 {
-                    DeployScripts(storageConnectionString, args[1]);
+                    Deploy(storageConnectionString, args[1], "");
+                }
+                else if (args.Length == 2 && args[0] == "-DeployContext")
+                {
+                    Deploy(storageConnectionString, args[1], "context");
                 }
                 else
                 {

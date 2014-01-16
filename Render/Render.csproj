@@ -75,6 +75,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Context\owner.jsonld" />
+    <None Include="Context\pacakge.jsonld" />
     <None Include="EF.json" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -82,6 +84,7 @@
     <Content Include="Scripts\index.html" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\Json2Html.js" />
+    <Content Include="Scripts\Json2HtmlStyle.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

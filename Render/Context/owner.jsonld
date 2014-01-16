@@ -1,0 +1,8 @@
+﻿{
+  "nuget" : "http://nuget.org/schema#",
+  "Username" : "nuget:Username",
+  "CreatedUtc" : "nuget:CreatedUtc",
+  "Packages" : "nuget:Packages",
+  "Id" : "nuget:Id",
+  "Uri" : "@id"
+}
