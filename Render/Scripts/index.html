@@ -10,6 +10,16 @@
 
 </head>
 <body>
-    <p>Hello World</p>
+    <input id="uri" type="text"><button id="go">GO</button>
+
+    <div id="results"></div>
+
+    <script>
+
+        $(document).ready(function() {
+
+            $("#go").click(alert($("#uri").val));
+        });
+
 </body>
 </html>
