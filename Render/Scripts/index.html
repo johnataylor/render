@@ -17,9 +17,13 @@
     <script>
 
         $(document).ready(function() {
-
-            $("#go").click(alert($("#uri").val));
+            $("#go").click(function () {
+                var url = $("#uri").val();
+                $.get(url, function (data, status) {
+                    $("#results").html(json2html(data));
+                });
+            })
         });
-
+    </script>
 </body>
 </html>
