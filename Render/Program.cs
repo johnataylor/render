@@ -151,15 +151,8 @@ namespace Render
             //Console.WriteLine(name);
         }
 
-        static JObject MakePackageDetailsContent(JObject package, IDictionary<int, JObject> packageDependencies, IDictionary<int, JObject> packageFrameworks, IDictionary<int, IList<int>> dependenciesByPackage, IDictionary<int, IList<int>> frameworksByPackage)
+        static JToken MakeDependencies(IDictionary<int, JObject> packageDependencies, IDictionary<int, IList<int>> dependenciesByPackage, int packageKey)
         {
-            int packageKey = package.Value<int>("Key");
-
-            package = (JObject)package.DeepClone();
-            package.Remove("Key");
-            package.Remove("PackageRegistrationKey");
-            package.Remove("UserKey");
-
             IList<int> dependencyKeys;
             if (dependenciesByPackage.TryGetValue(packageKey, out dependencyKeys))
             {
@@ -172,7 +165,27 @@ namespace Render
                     dependency.Add("Uri", MakePackageRegistrationUri(dependency));
                     dependencies.Add(dependency);
                 }
-                package.Add("dependencies", dependencies);
+                return dependencies;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        static JObject MakePackageDetailsContent(JObject package, IDictionary<int, JObject> packageDependencies, IDictionary<int, JObject> packageFrameworks, IDictionary<int, IList<int>> dependenciesByPackage, IDictionary<int, IList<int>> frameworksByPackage)
+        {
+            int packageKey = package.Value<int>("Key");
+
+            package = (JObject)package.DeepClone();
+            package.Remove("Key");
+            package.Remove("PackageRegistrationKey");
+            package.Remove("UserKey");
+
+            JToken depenedencies = MakeDependencies(packageDependencies, dependenciesByPackage, packageKey);
+            if (depenedencies != null)
+            {
+                package.Add("dependencies", depenedencies);
             }
 
             IList<int> frameworkKeys;
@@ -248,6 +261,12 @@ namespace Render
                 packageSummary.Add("Downloads", obj["DownloadCount"]);
                 packageSummary.Add("Published", obj["Published"]);
                 packageSummary.Add("Uri", MakePackageUri(packageRegistration, obj));
+                
+                JToken dependencies = MakeDependencies(packageDependencies, dependenciesByPackage, packageKey);
+                if (dependencies != null)
+                {
+                    packageSummary.Add("dependencies", dependencies);
+                }
 
                 packagesContent.Add(packageSummary);
             }
