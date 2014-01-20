@@ -512,10 +512,11 @@ namespace Render
 
             switch (extension)
             {
-                case "html":    return "text/html";
-                case "js":      return "application/javascript";
-                case "jsonld":  return "application/json";
-                default:        return "text/plain";
+                case "html":   return "text/html";
+                case "js":     return "application/javascript";
+                case "jsonld": return "application/json";
+                case "css":    return "text/css";
+                default: return "text/plain";
             }
         }
 
